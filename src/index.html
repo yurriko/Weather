@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Weather</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div class="titlebar">
+  <div class="self-start">Weather</div>
+  <div>
+    <button id="min-btn self-start">-</button>
+    <button id="close ">×</button>
+  </div>
+
+</div>
+<div class="weather-box">
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    document.getElementById('min-btn').addEventListener('click', () => {
+      ipcRenderer.send('window-minimize');
+    });
+
+    document.getElementById('close-btn').addEventListener('click', () => {
+      ipcRenderer.send('window-close');
+    });
+  </script>
+
+  <div class="box">
+    <img id="icon" src="icon.png" alt="Weather Icon">
+    <h1 id="temperature">--°</h1>
+    <p id="location">Загрузка...</p>
+    <button id="toggle">°C / °F</button>
+  </div>
+
+</div>
+<script src="renderer.js"></script>
+</body>
+</html>

@@ -11,33 +11,69 @@
 <body>
 <div class="titlebar">
   <div class="self-start">Weather</div>
-  <div>
+  <div class="titlebox">
+    <button id="toggle">°C / °F</button>
     <button id="min-btn">-</button>
     <button id="close-btn">×</button>
   </div>
-
 </div>
-<div class="weather-box">
-  <script>
-    const { ipcRenderer } = require('electron');
 
+
+<div class="weather-box">
+  <img id="back" src="assets/day.jpg" alt="back">
+  <!-- Новый пузырёк -->
+  <div class="bubble-container">
+    <div class="bubble-animation">
+      <img id="bubble" src="assets/day bubble.png" alt="bubble">
+      <div class="temp-text1" id="temp1">--°</div>
+      <div class="temp-text2" id="temp2">--°</div>
+    </div>
+  </div>
+
+  <img id="top-animation" class="frame-animation" src="assets/1.png" alt="Animation Frame">
+
+  <div class="box">
+    <p id="location">Загрузка...</p>
+  </div>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('min-btn').addEventListener('click', () => {
-      ipcRenderer.send('window-minimize');
+      window.electronAPI.minimize();
     });
 
     document.getElementById('close-btn').addEventListener('click', () => {
-      ipcRenderer.send('window-close');
+      window.electronAPI.close();
     });
-  </script>
 
-  <div class="box">
-    <img id="icon" src="icon.png" alt="Weather Icon">
-    <h1 id="temperature">--°</h1>
-    <p id="location">Загрузка...</p>
-    <button id="toggle">°C / °F</button>
-  </div>
+    // Изменение фона по времени
+    const hour = new Date().getHours();
+    const backImg = document.getElementById('back');
+    if (hour >= 21 || hour < 6) {
+      backImg.src = "assets/night.jpg";
+    }
 
-</div>
+    const bubble = document.getElementById('bubble');
+    if (hour >= 21 || hour < 6) {
+      backImg.src = "assets/night.jpg";
+      bubble.src = "assets/night bubble.png";
+    } else {
+      bubble.src = "assets/day bubble.png";
+    }
+
+    // Анимация из изображений
+    const frames = ['1.png', '2.png', '3.png', '4.png', '3.png','2.png' ];
+    let currentFrame = 0;
+    const animImg = document.getElementById('top-animation');
+
+    setInterval(() => {
+      currentFrame = (currentFrame + 1) % frames.length;
+      animImg.src = `assets/${frames[currentFrame]}`;
+    }, 200);
+  });
+</script>
+
 <script src="renderer.js"></script>
 </body>
 </html>

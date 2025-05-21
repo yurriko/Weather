@@ -8,23 +8,29 @@ if (require('electron-squirrel-startup')) {
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    //resizable: false,       // запрещаем менять размер окна
-    maximizable: false,     // запрещаем максимизацию
+    width: 340,
+    height: 380,
+    minWidth: 340,
+    minHeight: 380,
+    maxWidth: 340,
+    maxHeight: 380,
+    useContentSize: true,
+    resizable: false,
+    maximizable: false,
     minimizable: true,
+    titleBarStyle: 'hidden',
+    frame: false,
     fullscreenable: false,
-
-    frame: false,           // отключаем системный заголовок (title bar)
-    // На macOS вместо frame: false можно использовать titleBarStyle, но frame: false — кроссплатформенно.
-
+    icon: path.join(__dirname, 'src', 'icon1.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-    },
+      contextIsolation: true,
+      nodeIntegration: false,
+    }
   });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
-  mainWindow.webContents.openDevTools();
+ // mainWindow.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {

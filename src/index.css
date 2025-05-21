@@ -11,24 +11,112 @@ body {
 }
 
 .weather-box {
-  align-self: start;
-  text-align: center;
-  background: #b08a8a;
-  font-family: "Pixelify Sans", sans-serif;
-  padding: 20px;
-  height: calc(100vh - 80px);
+  position: relative;
   width: 100%;
-  margin-top: 40px; /* равен высоте titlebar */
+  height: 100%;
 }
-.box{
-  margin-top: 40px;
-  max-width: 70%;
-  justify-self: center;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  justify-content: center;
+
+.temp-text1 {
+  position: absolute;
+  top: 43%;
+  left: 17%;
+  transform: translate(-50%, -50%);
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 28px;
+  z-index: 1;
+  color: #542929;
+  pointer-events: none;
+  user-select: none;
 }
+.temp-text2 {
+  position: absolute;
+  top: 83%;
+  left: 87%;
+  transform: translate(-50%, -50%);
+  font-family: 'Pixelify Sans', monospace;
+  font-size: 28px;
+  color: #542929;
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.box {
+  position: absolute;
+  bottom: 0;
+  left: 12.5%;
+  width: 75%;
+  height: 43px;
+  text-align: center;
+  border-radius: 15px;
+  background: #542929;
+  color: white;
+  z-index: 2;
+  font-family: 'Pixelify Sans', monospace;
+}
+
+#top-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.bubble-container {
+  position: absolute;
+  display: flex; /* или нужное расположение */
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.bubble-animation img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.frame-animation {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.bubble-animation {
+  position: relative;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 80vh;
+  z-index: 1; /* Ниже frame-animation */
+  animation: float 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.frame-animation {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -20px); }
+  100% { transform: translate(-50%, 0); }
+}
+
 
 #icon {
   align-self: center;
@@ -36,6 +124,16 @@ body {
   width: 52px;
   height: 52px;
   image-rendering: pixelated;
+}
+
+#back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
 button {
@@ -63,7 +161,7 @@ button {
   left: 0;
   width: 100%;
   height: 40px;
-  background-color: #720e0e;
+  background-color: rgb(88,29,29);
   color: white;
   display: flex;
   align-items: center;
@@ -77,9 +175,10 @@ button {
 .titlebar button {
   -webkit-app-region: no-drag;
   background: transparent;
+  align-content: center;
   border: none;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   width: 30px;
   height: 20px;
   margin-right: 10px;
@@ -87,6 +186,11 @@ button {
   outline: none;
   transition: background-color 0.2s ease;
 }
+.titlebox{
+  display: flex;
+  align-items: center;
+}
+
 
 .titlebar button:hover {
   background-color: rgba(255, 255, 255, 0.2);
@@ -96,3 +200,8 @@ button {
   background-color: #e81123;
 }
 
+#toggle {
+  display: flex;
+  width: 70px;
+  font-size: 16px;
+}
